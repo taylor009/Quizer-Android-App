@@ -3,7 +3,10 @@ package com.tmgbinarycreations.quizzler;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -11,7 +14,8 @@ public class MainActivity extends Activity {
 
 
     // TODO: Declare member variables here:
-    Button mTrueButton;
+     Button mTrueButton;
+     Button mFalseButton;
 
     // TODO: Uncomment to create question bank
 //    private TrueFalse[] mQuestionBank = new TrueFalse[] {
@@ -36,6 +40,24 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mTrueButton = findViewById(R.id.true_button);
+        mFalseButton = findViewById(R.id.false_button);
+
+        View.OnClickListener myListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Quizzler", "Button pressed!");
+                Toast.makeText(getApplicationContext(), "True pressed!", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        mTrueButton.setOnClickListener(myListener);
+        mFalseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast myToast = Toast.makeText(getApplicationContext(), "False pressed!", Toast.LENGTH_SHORT);
+                myToast.show();
+            }
+        });
 
     }
 }
