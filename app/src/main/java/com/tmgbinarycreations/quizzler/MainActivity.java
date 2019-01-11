@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MainActivity extends Activity {
 
     // TODO: Declare constants here
@@ -56,6 +58,10 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Toast myToast = Toast.makeText(getApplicationContext(), "False pressed!", Toast.LENGTH_SHORT);
                 myToast.show();
+
+                TrueFalse exampleQuestion = new TrueFalse(R.string.question_1, true);
+
+                Random randomNumberGenerator = new Random();
             }
         });
 
