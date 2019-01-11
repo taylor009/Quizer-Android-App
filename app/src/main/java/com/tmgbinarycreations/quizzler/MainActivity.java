@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,15 +14,18 @@ import java.util.Random;
 
 public class MainActivity extends Activity {
 
-    // TODO: Declare constants here
 
 
     // TODO: Declare member variables here:
      Button mTrueButton;
      Button mFalseButton;
      TextView mQuestionTextView;
+     TextView mScoreTextView;
+     ProgressBar mProgressBar;
      int mIndex;
+     int mScore;
      int mQuestion;
+
 
 
     // TODO: Uncomment to create question bank
@@ -41,6 +45,9 @@ public class MainActivity extends Activity {
             new TrueFalse(R.string.question_13,true)
     };
 
+    // TODO: Declare constants here
+    final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / mQuestionBank.length);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +56,8 @@ public class MainActivity extends Activity {
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
         mQuestionTextView = findViewById(R.id.question_text_view);
+        mScoreTextView = findViewById(R.id.score);
+        mProgressBar = findViewById(R.id.progress_bar);
 
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
@@ -56,14 +65,14 @@ public class MainActivity extends Activity {
        mTrueButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               cheackAnswer(true);
+               checkAnswer(true);
                updateQuestion();
            }
        });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cheackAnswer(false);
+                checkAnswer(false);
                 updateQuestion();
             }
         });
@@ -73,13 +82,16 @@ public class MainActivity extends Activity {
         mIndex = (mIndex + 1) % mQuestionBank.length;
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
+        mProgressBar.incrementProgressBy(PROGRESS_BAR_INCREMENT);
+        mScoreTextView.setText("Score " + mScore + "/" + mQuestionBank.length);
     }
 
-    private void cheackAnswer(boolean userSelection){
+    private void checkAnswer(boolean userSelection){
         boolean correctAnswer = mQuestionBank[mIndex].isAnswer();
 
         if(userSelection == correctAnswer){
             Toast.makeText(getApplicationContext(), R.string.correct_toast, Toast.LENGTH_SHORT).show();
+            mScore = mScore + 1;
         } else {
             Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
