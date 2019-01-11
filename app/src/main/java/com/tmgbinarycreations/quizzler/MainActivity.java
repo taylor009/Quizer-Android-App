@@ -56,17 +56,21 @@ public class MainActivity extends Activity {
        mTrueButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Log.d("Quizzler", "Button pressed!");
-               Toast.makeText(getApplicationContext(), "True pressed!", Toast.LENGTH_SHORT).show();
+               updateQuestion();
            }
        });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "False pressed!", Toast.LENGTH_SHORT).show();
+                updateQuestion();
             }
         });
-
-
     }
+
+    private  void updateQuestion(){
+        mIndex = (mIndex + 1) % mQuestionBank.length;
+        mQuestion = mQuestionBank[mIndex].getQuestionID();
+        mQuestionTextView.setText(mQuestion);
+    }
+
 }
