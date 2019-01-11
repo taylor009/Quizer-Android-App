@@ -56,12 +56,14 @@ public class MainActivity extends Activity {
        mTrueButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               cheackAnswer(true);
                updateQuestion();
            }
        });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cheackAnswer(false);
                 updateQuestion();
             }
         });
@@ -71,6 +73,16 @@ public class MainActivity extends Activity {
         mIndex = (mIndex + 1) % mQuestionBank.length;
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
+    }
+
+    private void cheackAnswer(boolean userSelection){
+        boolean correctAnswer = mQuestionBank[mIndex].isAnswer();
+
+        if(userSelection == correctAnswer){
+            Toast.makeText(getApplicationContext(), R.string.correct_toast, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
